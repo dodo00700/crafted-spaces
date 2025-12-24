@@ -1,23 +1,34 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Layout } from "@/components/layout/Layout";
+import { Button } from "@/components/ui/button";
+import { Home } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
-  }, [location.pathname]);
+  const { language } = useLanguage();
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">404</h1>
-        <p className="mb-4 text-xl text-muted-foreground">Oops! Page not found</p>
-        <a href="/" className="text-primary underline hover:text-primary/90">
-          Return to Home
-        </a>
+    <Layout>
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="text-center px-4">
+          <h1 className="font-heading text-8xl font-bold text-gold mb-4">404</h1>
+          <h2 className="font-heading text-2xl sm:text-3xl font-semibold text-foreground mb-4">
+            {language === 'hr' ? 'Stranica nije pronađena' : 'Page Not Found'}
+          </h2>
+          <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+            {language === 'hr'
+              ? 'Stranica koju tražite ne postoji ili je premještena.'
+              : 'The page you are looking for does not exist or has been moved.'}
+          </p>
+          <Button variant="gold" size="lg" asChild>
+            <Link to="/">
+              <Home size={18} />
+              {language === 'hr' ? 'Povratak na početnu' : 'Back to Home'}
+            </Link>
+          </Button>
+        </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 
